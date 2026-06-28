@@ -10,4 +10,3 @@ test('Calcule correctement le total du panier avec une remise', () => {
   const total = calculerTotal(10000, 2, 2000); // 2 t-shirts à 10 000 FCFA moins 2 000 FCFA de réduction
   expect(total).toBe(18000); // On s'attend à ce que le résultat soit strictement 18 000 FCFA
 })
-expect(1).toBe(2); // Erreur volontaire flagrante !
