@@ -13,10 +13,9 @@ export function HeroImage() {
   const [emblaRef] = useEmblaCarousel({ loop: true }, [autoplayPlugin]);
 
   return (
-    // Ce conteneur principal reste en 'relative' pour englober tout
     <div className="relative w-full h-[60vh] md:h-[85vh]">
       
-      {/* 1. Le Carrousel est le fond qui défile */}
+      {/* 1. Le Carrousel (Fond) */}
       <div className="absolute inset-0 overflow-hidden" ref={emblaRef}>
         <div className="flex h-full">
           {images.map((src, index) => (
@@ -33,12 +32,12 @@ export function HeroImage() {
         </div>
       </div>
 
-      {/* 2. Le Logo (Immobile par-dessus) */}
+      {/* 2. Le Logo (Immobile) */}
       <div className="absolute top-4 left-4 md:top-8 md:left-8 z-20">
         <Image src="/logo.png" alt="Logo" width={200} height={200} priority className="w-16 md:w-24 lg:w-25 h-auto drop-shadow-md" />
       </div>
 
-      {/* 3. Les Liens (Immobiles par-dessus) */}
+      {/* 3. Les Liens (Immobiles) */}
       <div className="absolute top-4 right-4 md:top-8 md:right-8 z-20 flex gap-3 md:gap-4">
         <Link href="/mon-espace" className="flex items-center gap-2 text-white font-medium bg-black/40 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2 rounded-full text-sm hover:bg-black/60 transition-all">
           <Image src="/user.png" alt="Espace" width={16} height={16} />
@@ -49,6 +48,16 @@ export function HeroImage() {
           <span className="hidden md:inline">Panier</span>
         </Link>
       </div>
+
+      <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none p-4">
+  <h5 className="text-white font-serif italic 
+                 text-xl md:text-2xl lg:text-4xl 
+                 text-center leading-tight 
+                 filter-[drop-shadow(0px_8px_4px_rgba(0,0,0,0.8))]">
+    Découvrez toutes nos variétés de<br/>t-shirts de qualité
+  </h5>
+</div>
+
     </div>
   );
 }
