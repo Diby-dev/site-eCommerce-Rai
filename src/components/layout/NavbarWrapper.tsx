@@ -1,15 +1,20 @@
-'use client'; // Ce composant est un client component
+// src/components/layout/NavbarWrapper.tsx
+'use client';
 import { useState, useEffect } from 'react';
 import { Navbar } from './Navbar';
 
 export const NavbarWrapper = () => {
   const [showNavbar, setShowNavbar] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setShowNavbar(window.scrollY > 120);
+    const handleScroll = () => {
+      setShowNavbar(window.scrollY > 120);
+      setShowSearchBar(window.scrollY > 100);
+    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  return <Navbar isVisible={showNavbar} />;
+  return <Navbar isVisible={showNavbar} showSearchBar={showSearchBar} />;
 };
