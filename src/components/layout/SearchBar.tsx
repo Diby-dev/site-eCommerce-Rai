@@ -7,7 +7,7 @@ export const SearchBar = () => {
     // 1. w-full avec max-w-[90vw] (mobile) laisse de la place sur les côtés.
     // 2. md:max-w-xl lg:max-w-2xl redonne la largeur complète sur PC/Tablette.
     // 3. h-10 (mobile) et md:h-14 (PC/Tablette) gère la hauteur.
-    <div className="flex items-stretch bg-gray-50 rounded-[100px] w-full max-w-[90vw] md:max-w-xl lg:max-w-2xl border border-gray-200 shadow-lg overflow-hidden mx-auto h-10 md:h-14">
+    <div className="flex items-stretch bg-gray-50 rounded-[100px] w-full max-w-[90vw] md:max-w-xl lg:max-w-2xl border border-gray-200 filter-[drop-shadow(0px_8px_4px_rgba(0,0,0,0.8))] overflow-hidden mx-auto h-10 md:h-14">
       
       {/* Icône */}
       <div className="flex items-center pl-3 md:pl-6 text-gray-400">
