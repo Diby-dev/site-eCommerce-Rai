@@ -10,7 +10,7 @@ export const NavbarWrapper = () => {
   useEffect(() => {
     const handleScroll = () => {
       setShowNavbar(window.scrollY > 120);
-      setShowSearchBar(window.scrollY > 800);
+      setShowSearchBar(window.scrollY > 700);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);

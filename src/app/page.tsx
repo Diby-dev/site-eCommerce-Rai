@@ -1,5 +1,7 @@
 import { NavbarWrapper } from '@/components/layout/NavbarWrapper';
 import { HeroImage } from '@/components/layout/HeroImage';
+import { SearchBar } from '@/components/layout/SearchBar';
+import { FilterBar } from '@/components/layout/FilterBar';
 
 
 export default function ShopPage() {
@@ -11,9 +13,11 @@ export default function ShopPage() {
         {/* Ici viendra ton contenu (recherche, filtres, produits) */}
         <div className="text-center">
           <h2 className="text-orange-600 font-medium text-sm">Habillez vous avec style</h2>
-          <h1 className="text-base md:text-2xl lg:text-3xl font-bold text-gray-900 mt-2">
+          <h1 className="text-base md:text-2xl lg:text-3xl font-bold text-gray-900 mt-2 mb-7 lg:mb-15">
             Trouvez votre style avec nos<br/>de t-shirts de qualité
           </h1>
+          <SearchBar />
+          <FilterBar />
         </div>
       </main>
     </div>
