@@ -71,12 +71,45 @@ export default async function ShopPage() {
           </div>
         </div>
         </div>
-        <div className='mt-100'>S</div>
-        <div className='mt-100'>S</div>
-        <div className='mt-100'>S</div>
-        <div className='mt-100'>S</div>
-        <div className='mt-100'>S</div>
-      </main>
+
+        <div className="relative z-20 mt-24 lg:mt-60 mx-4 md:mx-12 lg:mx-24 bg-white rounded-[50px] shadow-[0_-6px_30px_rgba(0,0,0,0.5)] p-8 md:p-12">
+          <div className="text-center mb-12">
+            <h2 className="text-orange-600 font-medium text-sm">Nos chiffres</h2>
+            <h1 className="text-base md:text-2xl lg:text-3xl font-bold text-gray-900 mt-2">
+              La communauté grandit
+          </h1>
+      </div>
+
+      {/* Grille des 3 indicateurs */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+    
+      {/* T-shirts */}
+      <div className="flex flex-col items-center">
+        <div className="bg-orange-100 text-orange-600 px-6 py-3 rounded-full font-bold text-3xl mb-4">
+          +{tshirts?.length || 0}
+        </div>
+      <h3 className="font-semibold text-gray-900">Modèles créés</h3>
+    </div>
+
+      {/* Avis (Valeur statique pour l'instant) */}
+      <div className="flex flex-col items-center">
+        <div className="bg-orange-100 text-orange-600 px-6 py-3 rounded-full font-bold text-3xl mb-4">
+          +150
+          </div>
+        <h3 className="font-semibold text-gray-900">Avis clients</h3>
+      </div>
+
+      {/* Achats */}
+      <div className="flex flex-col items-center">
+        <div className="bg-orange-100 text-orange-600 px-6 py-3 rounded-full font-bold text-3xl mb-4">
+          +400
+          </div>
+        <h3 className="font-semibold text-gray-900">T-shirts vendus</h3>
+      </div>
+      </div>
+      
+    </div>
+    </main>
     </div>
   );
 }
