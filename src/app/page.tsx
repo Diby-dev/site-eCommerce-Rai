@@ -2,7 +2,8 @@ import { NavbarWrapper } from '@/components/layout/NavbarWrapper';
 import { HeroImage } from '@/components/layout/HeroImage';
 import { SearchBar } from '@/components/layout/SearchBar';
 import { FilterBar } from '@/components/layout/FilterBar';
-import { ProductCard } from '@/components/layout/ProductCard'; // Ton composant de carte
+import { ProductCard } from '@/components/layout/ProductCard';
+import { Conectshar } from '@/components/layout/Conectshar';
 import { supabase } from '@/lib/supabase';
 import { Tshirt } from '@/types/database';
 
@@ -23,8 +24,9 @@ export default async function ShopPage() {
     <div className="min-h-screen bg-slate-950">
       <NavbarWrapper />
       <HeroImage />
-      <main className="relative z-20 -mt-24 mx-4 md:mx-12 lg:mx-24 bg-white rounded-t-[50px] shadow-[0_-6px_30px_rgba(0,0,0,0.5)] min-h-screen p-8 md:p-12">
-        <div className="text-center">
+      <main>
+        <div className="relative z-20 -mt-24 mx-4 md:mx-12 lg:mx-24 bg-white rounded-[50px] shadow-[0_-6px_30px_rgba(0,0,0,0.5)] min-h-screen p-8 md:p-12">
+          <div className="text-center">
           <h2 className="text-orange-600 font-medium text-sm">Habillez vous avec style</h2>
           <h1 className="text-base md:text-2xl lg:text-3xl filter-[drop-shadow(0px_10px_50px_rgba(0,0,0,0.8))] font-bold text-gray-900 mt-2 mb-7 lg:mb-15">
             Trouvez votre style avec nos<br/>t-shirts de qualité
@@ -39,10 +41,22 @@ export default async function ShopPage() {
         </div>
 
         {/* Grille des produits en bas du FilterBar */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {tshirts?.map((item: Tshirt) => (
             <ProductCard key={item.id_tshirt} tshirt={item} />
           ))}
+        </div>
+        </div>
+
+
+        <div className="relative z-20 mt-24 lg:mt-60 mx-4 h-150 md:h-120 lg:h-115 md:mx-12 lg:mx-24 bg-white rounded-[50px] shadow-[0_-6px_30px_rgba(0,0,0,0.5)] p-8 md:p-12">
+          <div className="text-center">
+          <h2 className="text-orange-600 font-medium text-sm">Restez à la mode</h2>
+          <h1 className="text-base md:text-2xl lg:text-3xl filter-[drop-shadow(0px_10px_50px_rgba(0,0,0,0.8))] font-bold text-gray-900 mt-2 mb-7 lg:mb-15">
+            N&apos;oubiez pas de partager<br/>et de vous connecter
+          </h1>
+          <Conectshar/>
+        </div>
         </div>
       </main>
     </div>

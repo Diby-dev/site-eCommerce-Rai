@@ -1,5 +1,7 @@
+'use client';
 import Image from 'next/image';
 import { Tshirt } from '@/types/database';
+import { motion } from "motion/react";
 
 interface ProductCardProps {
   tshirt: Tshirt;
@@ -14,7 +16,30 @@ export const ProductCard = ({ tshirt }: ProductCardProps) => {
     : '/placeholder-tshirt.png'; // Assure-toi d'avoir une image par défaut dans ton dossier public
 
   return (
-    <div className="bg-white border border-gray-100 rounded-3xl overflow-hidden hover:filter-[drop-shadow(0px_10px_4px_rgba(0,0,0,0.8))] filter-[drop-shadow(0px_1px_2px_rgba(0,0,0,0.8))] transition-all duration-300 flex flex-col group">
+    <motion.div
+  initial={{ opacity: 0, y: 40 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, amount: 0.2 }}
+  transition={{ duration: 0.8 }} className="bg-white border border-gray-100 hover:scale-105 rounded-3xl overflow-hidden hover:filter-[drop-shadow(0px_10px_4px_rgba(0,0,0,0.8))] filter-[drop-shadow(0px_1px_2px_rgba(0,0,0,0.8))] transition-all duration-300 flex flex-col group">
+      <div
+  className="
+    absolute
+    top-[-50%]
+    left-[-120%]
+    h-[220%]
+    w-[40%]
+    rotate-25
+    bg-linear-to-b
+    from-transparent
+    via-white/60
+    to-transparent
+    transition-all
+    duration-700
+    group-hover:left-[140%]
+    pointer-events-none
+    z-20
+  "
+/>
       {/* Zone Image : responsive carré */}
       <div className="relative w-full pt-[100%] overflow-hidden bg-gray-50">
         <Image 
@@ -43,6 +68,6 @@ export const ProductCard = ({ tshirt }: ProductCardProps) => {
           Stock : {tshirt.nombre_tshirt}
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
