@@ -4,6 +4,7 @@ import { SearchBar } from '@/components/layout/SearchBar';
 import { FilterBar } from '@/components/layout/FilterBar';
 import { ProductCard } from '@/components/layout/ProductCard';
 import { Conectshar } from '@/components/layout/Conectshar';
+import { Footer } from '@/components/layout/Footer';
 import { supabase } from '@/lib/supabase';
 import { Tshirt } from '@/types/database';
 import { Video } from '@/components/layout/Video';
@@ -83,7 +84,7 @@ export default async function ShopPage() {
       {/* Grille des 3 indicateurs */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
     
-      {/* T-shirts */}
+      {/* T-shirt */}
       <div className="flex flex-col items-center">
         <div className="bg-orange-100 text-orange-600 px-6 py-3 rounded-full font-bold text-3xl mb-4">
           +{tshirts?.length || 0}
@@ -107,9 +108,9 @@ export default async function ShopPage() {
         <h3 className="font-semibold text-gray-900">T-shirts vendus</h3>
       </div>
       </div>
-      
     </div>
     </main>
+    <Footer />
     </div>
   );
 }
