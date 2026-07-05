@@ -40,11 +40,11 @@ export function HeroImage() {
       {/* 3. Les Liens (Immobiles) */}
       <div className="absolute top-4 right-4 md:top-8 md:right-8 z-20 flex gap-3 md:gap-4">
         <Link href="/mon-espace" className="flex items-center gap-2 text-white font-medium bg-black/40 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2 rounded-full text-sm hover:bg-black/60 transition-all">
-          <Image src="/user.png" alt="Espace" width={16} height={16} />
+          <Image src="/user.png" style={{ width: 'auto', height: 'auto' }} alt="Espace" width={16} height={16} />
           <span className="hidden md:inline">Mon espace</span>
         </Link>
         <Link href="/cart" className="flex items-center gap-2 text-white font-medium bg-black/40 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2 rounded-full text-sm hover:bg-black/60 transition-all">
-          <Image src="/shop.png" alt="Panier" width={16} height={16} />
+          <Image src="/shop.png" style={{ width: 'auto', height: 'auto' }} alt="Panier" width={16} height={16} />
           <span className="hidden md:inline">Panier</span>
         </Link>
       </div>
