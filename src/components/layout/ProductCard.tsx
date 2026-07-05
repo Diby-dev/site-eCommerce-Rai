@@ -20,7 +20,7 @@ export const ProductCard = ({ tshirt }: ProductCardProps) => {
   initial={{ opacity: 0, y: 40 }}
   whileInView={{ opacity: 1, y: 0 }}
   viewport={{ once: true, amount: 0.2 }}
-  transition={{ duration: 0.8 }} className="bg-white border border-gray-100 hover:scale-105 rounded-3xl overflow-hidden hover:filter-[drop-shadow(0px_10px_4px_rgba(0,0,0,0.8))] filter-[drop-shadow(0px_1px_2px_rgba(0,0,0,0.8))] transition-all duration-300 flex flex-col group">
+  transition={{ duration: 1 }} className="bg-white border border-gray-100 hover:scale-105 rounded-3xl overflow-hidden hover:filter-[drop-shadow(0px_10px_4px_rgba(0,0,0,0.8))] filter-[drop-shadow(0px_1px_2px_rgba(0,0,0,0.8))] transition-all duration-300 flex flex-col group">
       <div
   className="
     absolute

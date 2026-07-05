@@ -6,6 +6,7 @@ import { ProductCard } from '@/components/layout/ProductCard';
 import { Conectshar } from '@/components/layout/Conectshar';
 import { supabase } from '@/lib/supabase';
 import { Tshirt } from '@/types/database';
+import { Video } from '@/components/layout/Video';
 
 export default async function ShopPage() {
   // 1. Récupération des données typées
@@ -58,6 +59,23 @@ export default async function ShopPage() {
           <Conectshar/>
         </div>
         </div>
+
+        <div className="relative z-20 mt-24 lg:mt-60 mx-4 h-75 md:h-140 lg:h-190 md:mx-12 lg:mx-24 bg-white rounded-[50px] shadow-[0_-6px_30px_rgba(0,0,0,0.5)] p-8 md:p-12">
+          <div className="text-center">
+          <h2 className="text-orange-600 font-medium text-sm">Découvrez nos articles en vidéo</h2>
+          <h1 className="text-base md:text-2xl lg:text-3xl filter-[drop-shadow(0px_10px_50px_rgba(0,0,0,0.8))] font-bold text-gray-900 mt-2 mb-7 lg:mb-15">
+            Nos articles en vidéo
+          </h1>
+          <div className="mt-8 mb-10 w-full max-w-4xl mx-auto overflow-hidden rounded-[30px] shadow-lg">
+            <Video src="/tshirt.mp4" />
+          </div>
+        </div>
+        </div>
+        <div className='mt-100'>S</div>
+        <div className='mt-100'>S</div>
+        <div className='mt-100'>S</div>
+        <div className='mt-100'>S</div>
+        <div className='mt-100'>S</div>
       </main>
     </div>
   );
