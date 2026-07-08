@@ -1,172 +1,123 @@
-'use client';
+import { NavbarWrapper } from '@/components/home/NavbarWrapper';
+import { HeroImage } from '@/components/home/HeroImage';
+import { SearchBar } from '@/components/layout/SearchBar';
+import { FilterBar } from '@/components/home/FilterBar';
+import { ProductCard } from '@/components/home/ProductCard';
+import { Conectshar } from '@/components/home/Conectshar';
+import { Footer } from '@/components/layout/Footer';
 
-import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
+import { Tshirt } from '@/types/database';
+import { Video } from '@/components/home/Video';
 
-interface Tshirt {
-  id_tshirt: number;
-  nom_tshirt: string;
-  prix_tshirt: number;
-  couleur_tshirt: string;
-  taille_tshirt: string;
-  statut_tshirt: 'disponible' | 'stock épuisé';
-  nombre_tshirt: number;
-  detail_tshirt: string | null;
-  image_url: string | null;
-  marque_tshirt: string | null;
-  type_tshirt: string | null;
-}
+export default async function ShopPage() {
+  // 1. Récupération des données typées
+  const { data: tshirts, error } = await supabase
+    .from('tshirt')
+    .select('*')
+    .order('date_tshirt', { ascending: false });
 
-export default function Home() {
-  const [tshirts, setTshirts] = useState<Tshirt[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function fetchTshirts() {
-      try {
-        setLoading(true);
-        const { data, error } = await supabase
-          .from('tshirt')
-          .select('*')
-          .order('id_tshirt', { ascending: true });
-
-        if (error) throw error;
-
-        if (data) {
-          setTshirts(data as Tshirt[]);
-        }
-      } catch (error: unknown) {
-  const message = error instanceof Error ? error.message : 'Impossible de charger les produits.';
-  setErrorMsg(message);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchTshirts();
-  }, []);
+  // 2. Gestion de l'erreur (si elle existe, tshirts sera null)
+  if (error) {
+    console.error("Erreur Supabase:", error);
+    return <div className="text-white text-center pt-20">Erreur de chargement des t-shirts.</div>;
+  }
 
   return (
-    <main className="flex min-h-screen flex-col items-center bg-slate-950 text-white p-8 md:p-16">
-      {/* Header */}
-      <div className="w-full max-w-6xl text-center mb-12">
-        <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-indigo-500 tracking-tight">
-          e-tshirt(raissa)
-        </h1>
-        <p className="text-slate-400 mt-2 font-mono text-sm">
-          Aperçu dynamique de la base de données Supabase
-        </p>
-      </div>
-
-      {/* Zone d'affichage des états (Chargement / Erreur) */}
-      {loading && (
-        <div className="flex items-center justify-center space-x-2 text-blue-400 font-medium my-12 animate-pulse">
-          <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
-          <div>Chargement des t-shirts...</div>
+    <div className="min-h-screen bg-slate-950">
+      <NavbarWrapper />
+      <HeroImage />
+      <main>
+        <div className="relative z-20 -mt-24 mx-4 md:mx-12 lg:mx-24 bg-white rounded-[50px] shadow-[0_-6px_30px_rgba(0,0,0,0.5)] min-h-screen p-8 md:p-12">
+          <div className="text-center">
+          <h2 className="text-orange-600 font-medium text-sm">Habillez vous avec style</h2>
+          <h1 className="text-base md:text-2xl lg:text-3xl filter-[drop-shadow(0px_10px_50px_rgba(0,0,0,0.8))] font-bold text-gray-900 mt-2 mb-7 lg:mb-15">
+            Trouvez votre style avec nos<br/>t-shirts de qualité
+          </h1>
+          <SearchBar />
+          <FilterBar />
         </div>
-      )}
 
-      {errorMsg && (
-        <div className="bg-red-950 border border-red-800 text-red-200 px-6 py-4 rounded-xl max-w-xl text-center shadow-lg my-6">
-          <p className="font-bold">❌ Une erreur est survenue</p>
-          <p className="text-sm text-red-400 mt-1 font-mono">{errorMsg}</p>
+        <div className="mt-8 mb-4 bg-purple-700 text-white px-6 py-3 rounded-full flex justify-between items-center shadow-md">
+          <span className="font-medium text-sm md:text-base">t-shirts trouvés</span>
+          <span className="font-bold text-lg">{tshirts?.length || 0}</span>
         </div>
-      )}
 
-      {/* Grille de produits */}
-      {!loading && !errorMsg && (
-        <div className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {tshirts.map((item) => (
-            <div 
+        {/* Grille des produits en bas du FilterBar */}
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          {tshirts?.map((item: Tshirt) => (
+            <Link 
               key={item.id_tshirt} 
-              className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl flex flex-col group hover:border-slate-700 transition-all duration-300"
-            >
-              {/* Conteneur de l'image */}
-              <div className="relative w-full aspect-square bg-slate-950 overflow-hidden flex items-center justify-center border-b border-slate-800">
-                {item.image_url ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={item.image_url}
-                    alt={item.nom_tshirt}
-                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
-                  />
-                ) : (
-                  <div className="text-slate-600 text-xs italic">Aucune image disponible</div>
-                )}
-
-                {/* Badge de Statut */}
-                <span className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-md ${
-                  item.statut_tshirt === 'disponible' 
-                    ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
-                    : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
-                }`}>
-                  {item.statut_tshirt}
-                </span>
-              </div>
-
-              {/* Détails du produit */}
-              <div className="p-6 flex flex-col grow">
-                <div className="flex justify-between items-start mb-2">
-                  <h2 className="text-xl font-bold tracking-tight text-slate-100 group-hover:text-blue-400 transition-colors">
-                    {item.nom_tshirt}
-                  </h2>
-                </div>
-
-                <p className="text-sm text-slate-400 grow mb-6 line-clamp-3">
-                  {item.detail_tshirt || "Aucune description fournie pour cet article."}
-                </p>
-
-                {/* Attributs (Taille, Couleur, Stock) */}
-                <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono text-slate-300 mb-6 bg-slate-950/50 p-3 rounded-xl border border-slate-800/50">
-                  <div>
-                    <span className="block text-slate-500 mb-0.5">Taille</span>
-                    <span className="bg-slate-800 px-2 py-0.5 rounded text-blue-400 font-bold">{item.taille_tshirt || 'N/A'}</span>
-                  </div>
-                  <div>
-                    <span className="block text-slate-500 mb-0.5">Couleur</span>
-                    <span className="text-slate-200">{item.couleur_tshirt}</span>
-                  </div>
-                  <div>
-                    <span className="block text-slate-500 mb-0.5">Stock</span>
-                    <span className={item.nombre_tshirt > 5 ? 'text-emerald-400' : 'text-amber-400'}>
-                      {item.nombre_tshirt} pcs
-                    </span>
-                  </div>
-                </div>
-
-                {/* Pied de carte : Prix & Action */}
-                <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-800">
-                  <div className="flex flex-col">
-                    <span className="text-xs text-slate-500 font-mono">Prix</span>
-                    <span className="text-2xl font-black text-transparent bg-clip-text bg-linear-to-r from-emerald-400 to-teal-400">
-                      {item.prix_tshirt.toLocaleString('fr-FR')} <span className="text-xs font-bold">FCFA</span>
-                    </span>
-                  </div>
-                  
-                  <button 
-                    disabled={item.statut_tshirt !== 'disponible'}
-                    className={`px-4 py-2.5 rounded-xl font-bold text-sm shadow-lg transition-all ${
-                      item.statut_tshirt === 'disponible'
-                        ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-600/10 hover:shadow-blue-600/20 active:scale-95'
-                        : 'bg-slate-800 text-slate-500 cursor-not-allowed'
-                    }`}
-                  >
-                    Acheter
-                  </button>
-                </div>
-              </div>
-            </div>
+              href={`/produits/${item.id_tshirt}`} 
+              className="block hover:scale-105 transition-transform duration-300">
+              <ProductCard tshirt={item} />
+            </Link>
           ))}
         </div>
-      )}
-
-      {/* Si aucune donnée n'est renvoyée */}
-      {!loading && !errorMsg && tshirts.length === 0 && (
-        <div className="text-center p-12 bg-slate-900 border border-slate-800 rounded-2xl max-w-md my-12">
-          <p className="text-slate-400 text-lg">La table est vide pour le moment.</p>
         </div>
-      )}
+
+
+        <div className="relative z-20 mt-24 lg:mt-60 mx-4 h-150 md:h-120 lg:h-115 md:mx-12 lg:mx-24 bg-white rounded-[50px] shadow-[0_-6px_30px_rgba(0,0,0,0.5)] p-8 md:p-12">
+          <div className="text-center">
+          <h2 className="text-orange-600 font-medium text-sm">Restez à la mode</h2>
+          <h1 className="text-base md:text-2xl lg:text-3xl filter-[drop-shadow(0px_10px_50px_rgba(0,0,0,0.8))] font-bold text-gray-900 mt-2 mb-7 lg:mb-15">
+            N&apos;oubiez pas de partager<br/>et de vous connecter
+          </h1>
+          <Conectshar/>
+        </div>
+        </div>
+
+        <div className="relative z-20 mt-24 lg:mt-60 mx-4 h-75 md:h-140 lg:h-190 md:mx-12 lg:mx-24 bg-white rounded-[50px] shadow-[0_-6px_30px_rgba(0,0,0,0.5)] p-8 md:p-12">
+          <div className="text-center">
+          <h2 className="text-orange-600 font-medium text-sm">Découvrez nos articles en vidéo</h2>
+          <h1 className="text-base md:text-2xl lg:text-3xl filter-[drop-shadow(0px_10px_50px_rgba(0,0,0,0.8))] font-bold text-gray-900 mt-2 mb-7 lg:mb-15">
+            Nos articles en vidéo
+          </h1>
+          <div className="mt-8 mb-10 w-full max-w-4xl mx-auto overflow-hidden rounded-[30px] shadow-lg">
+            <Video src="/tshirt.mp4" />
+          </div>
+        </div>
+        </div>
+
+        <div className="relative z-20 mt-24 lg:mt-60 mx-4 md:mx-12 lg:mx-24 bg-white rounded-[50px] shadow-[0_-6px_30px_rgba(0,0,0,0.5)] p-8 md:p-12">
+          <div className="text-center mb-12">
+            <h2 className="text-orange-600 font-medium text-sm">Nos chiffres</h2>
+            <h1 className="text-base md:text-2xl lg:text-3xl font-bold text-gray-900 mt-2">
+              La communauté grandit
+          </h1>
+      </div>
+
+      {/* Grille des 3 indicateurs */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+    
+      {/* T-shirt */}
+      <div className="flex flex-col items-center">
+        <div className="bg-orange-100 text-orange-600 px-6 py-3 rounded-full font-bold text-3xl mb-4">
+          +{tshirts?.length || 0}
+        </div>
+      <h3 className="font-semibold text-gray-900">Modèles créés</h3>
+    </div>
+
+      {/* Avis (Valeur statique pour l'instant) */}
+      <div className="flex flex-col items-center">
+        <div className="bg-orange-100 text-orange-600 px-6 py-3 rounded-full font-bold text-3xl mb-4">
+          +150
+          </div>
+        <h3 className="font-semibold text-gray-900">Avis clients</h3>
+      </div>
+
+      {/* Achats */}
+      <div className="flex flex-col items-center">
+        <div className="bg-orange-100 text-orange-600 px-6 py-3 rounded-full font-bold text-3xl mb-4">
+          +400
+          </div>
+        <h3 className="font-semibold text-gray-900">T-shirts vendus</h3>
+      </div>
+      </div>
+    </div>
     </main>
+    <Footer />
+    </div>
   );
 }
