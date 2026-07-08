@@ -13,7 +13,7 @@ const navLinks = [
   { name: 'Panier', href: '/panier' },
 ];
 
-// 1. Déplacé à l'extérieur : ce n'est plus un composant créé pendant le rendu
+// 1. Déplacé à l'extérieur : ce n'est plus un composant créé pendant le rendu..
 const SearchBar = () => (
   <div className="hidden lg:flex items-center bg-gray-100 rounded-[100px] mx-8 max-w-md w-full shadow-md border border-gray-200 overflow-hidden">
     {/* Icône de loupe */}
