@@ -1,13 +1,15 @@
-import { NavbarWrapper } from '@/components/layout/NavbarWrapper';
-import { HeroImage } from '@/components/layout/HeroImage';
+import { NavbarWrapper } from '@/components/home/NavbarWrapper';
+import { HeroImage } from '@/components/home/HeroImage';
 import { SearchBar } from '@/components/layout/SearchBar';
-import { FilterBar } from '@/components/layout/FilterBar';
-import { ProductCard } from '@/components/layout/ProductCard';
-import { Conectshar } from '@/components/layout/Conectshar';
+import { FilterBar } from '@/components/home/FilterBar';
+import { ProductCard } from '@/components/home/ProductCard';
+import { Conectshar } from '@/components/home/Conectshar';
 import { Footer } from '@/components/layout/Footer';
+
+import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { Tshirt } from '@/types/database';
-import { Video } from '@/components/layout/Video';
+import { Video } from '@/components/home/Video';
 
 export default async function ShopPage() {
   // 1. Récupération des données typées
@@ -45,7 +47,12 @@ export default async function ShopPage() {
         {/* Grille des produits en bas du FilterBar */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {tshirts?.map((item: Tshirt) => (
-            <ProductCard key={item.id_tshirt} tshirt={item} />
+            <Link 
+              key={item.id_tshirt} 
+              href={`/produits/${item.id_tshirt}`} 
+              className="block hover:scale-105 transition-transform duration-300">
+              <ProductCard tshirt={item} />
+            </Link>
           ))}
         </div>
         </div>

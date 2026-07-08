@@ -7,5 +7,6 @@ export interface Tshirt {
   image_url?: string | null;
   statut_tshirt: 'disponible' | 'stock épuisé';
   nombre_tshirt: number;
+  detail_tshirt: string;
   // ... autres champs si besoin
 }
