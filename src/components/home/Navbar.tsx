@@ -1,4 +1,3 @@
-// src/components/home/Navbar.tsx
 'use client';
 
 import { useState } from 'react';
@@ -14,9 +13,9 @@ const navLinks = [
   { name: 'Panier', href: '/panier' },
 ];
 
+// 1. Déplacé à l'extérieur : ce n'est plus un composant créé pendant le rendu..
 const SearchBar = () => (
-  // CORRECTION : Changement de "hidden lg:flex" à "flex" pour obéir aux conteneurs parents responsives
-  <div className="flex items-center bg-gray-100 rounded-[100px] shadow-md border border-gray-200 overflow-hidden w-full">
+  <div className="hidden lg:flex items-center bg-gray-100 rounded-[100px] mx-8 max-w-md w-full shadow-md border border-gray-200 overflow-hidden">
     {/* Icône de loupe */}
     <div className="pl-4 text-slate-900">
       <Search size={20} />
@@ -44,18 +43,16 @@ export const Navbar = ({ isVisible, showSearchBar }: { isVisible: boolean; showS
     <>
       <nav className={`fixed top-0 left-0 w-full z-50 bg-slate-900/80 backdrop-blur-sm p-4 flex justify-between items-center text-white shadow-[0_10px_6px_-1px_rgba(0,0,0,0.3)] transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         
-        <Link href="/" onClick={closeMenu} className="z-50 ms-5 shrink-0">
+        <Link href="/" onClick={closeMenu} className="z-50 ms-5">
           <Image src="/logo.png" alt="Logo" width={150} height={50} priority className="w-14 md:w-20 h-auto" />
         </Link>
 
-        {/* Barre de recherche - Version Mobile */}
         {showSearchBar && (
-           <div className="w-full md:hidden mt-4 px-2">
+           <div className="w-full md:hidden mt-4">
              <SearchBar />
            </div>
         )}
 
-        {/* Barre de recherche - Version Bureau */}
         {showSearchBar && (
            <div className="hidden md:block flex-1 mx-8 max-w-md">
              <SearchBar />
@@ -83,7 +80,6 @@ export const Navbar = ({ isVisible, showSearchBar }: { isVisible: boolean; showS
         </button>
       </nav>
 
-      {/* Menu Latéral Mobile */}
       <div className={`fixed top-0 left-0 bottom-0 backdrop-blur-sm z-40 w-64 bg-slate-900/65 p-6 pt-24 shadow-2xl transition-transform duration-300 md:hidden ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <ul className="flex flex-col gap-4 text-lg font-medium">
           {navLinks.map((link) => (
