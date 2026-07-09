@@ -9,19 +9,22 @@ export const Navbar = () => {
         
         {/* LOGO (Gauche) */}
         <Link href="/" className="flex items-center">
-          <Image src="/logo.png" alt="Logo" width={120} height={40} priority className="w-14 md:w-15 h-auto" />
-        </Link>
+  <span className="flex items-center gap-2">
+    <Image src="/logo.png" alt="Logo" width={120} height={40} priority className="w-14 md:w-15 h-auto" />
+    <p className="text-amber-50 font-bold">KINGSHOP</p>
+  </span>
+</Link>
 
         {/* LIENS (Droite) */}
         <div className="flex items-center gap-6">
           <Link href="/compte" className="flex items-center gap-2 hover:text-blue-400 text-[18px] font-bold transition-colors">
             <User size={20} />
-            <span className="hidden md:inline">Mon espace</span>
+            <span className="hidden md:inline text-amber-50">Mon espace</span>
           </Link>
           
           <Link href="/panier" className="flex items-center gap-2 hover:text-blue-400 text-[18px] font-bold transition-colors">
             <ShoppingBag size={20} />
-            <span className="hidden md:inline">Panier</span>
+            <span className="hidden md:inline text-amber-50">Panier</span>
           </Link>
         </div>
 
