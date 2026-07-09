@@ -18,7 +18,7 @@ export const ProductCard = ({ tshirt }: ProductCardProps) => {
   
   const imageUrl = tshirt.image_url 
     ? (tshirt.image_url.startsWith('http') ? tshirt.image_url : `${STORAGE_URL}${tshirt.image_url}`)
-    : '/placeholder-tshirt.png'; // Assure-toi d'avoir une image par défaut dans ton dossier public
+    : '/placeholder-tshirt.png';
 
   return (
     <motion.div
