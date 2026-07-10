@@ -57,7 +57,7 @@ export default async function ShopPage() {
         </div>
 
 
-        <div className="relative z-20 mt-10 lg:mt-15 mx-4 h-150 md:h-120 lg:h-115 md:mx-12 lg:mx-24 bg-white rounded-[50px] shadow-[0_-6px_30px_rgba(0,0,0,0.5)] p-8 md:p-12">
+        <div className="relative z-20 mt-12 lg:mt-10 mx-4 h-150 md:h-120 lg:h-115 md:mx-12 lg:mx-24 bg-white rounded-[50px] shadow-[0_-6px_30px_rgba(0,0,0,0.5)] p-8 md:p-12">
           <div className="text-center">
           <h2 className="text-orange-600 font-medium text-sm">Restez à la mode</h2>
           <h1 className="text-base md:text-2xl lg:text-3xl filter-[drop-shadow(0px_10px_50px_rgba(0,0,0,0.8))] font-bold text-gray-900 mt-2 mb-7 lg:mb-15">
@@ -67,7 +67,8 @@ export default async function ShopPage() {
         </div>
         </div>
 
-        <div className="relative z-20 mt-10 lg:mt-15 mx-4 md:mx-12 lg:mx-24 bg-white rounded-[50px] shadow-[0_-6px_30px_rgba(0,0,0,0.5)] p-8 md:p-12">
+        
+        <div className="relative z-20 mt-11 lg:mt-10 mx-4 md:mx-12 lg:mx-24 bg-white rounded-[50px] shadow-[0_-6px_30px_rgba(0,0,0,0.5)] p-8 md:p-12">
           <div className="text-center mb-12">
             <h2 className="text-orange-600 font-medium text-sm">Nos chiffres</h2>
             <h1 className="text-base md:text-2xl lg:text-3xl font-bold text-gray-900 mt-2">

@@ -40,7 +40,7 @@ export function HeroImage() {
 
       {/* 3. Les Liens (Immobiles) */}
       <div className="absolute top-4 right-4 md:top-8 md:right-8 z-20 flex gap-3 md:gap-4">
-        <Link href="/mon-espace" className="flex items-center gap-2 text-white font-medium bg-black/40 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2 rounded-full text-sm hover:bg-black/60 transition-all">
+        <Link href="/inscription" className="flex items-center gap-2 text-white font-medium bg-black/40 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2 rounded-full text-sm hover:bg-black/60 transition-all">
           <User size={16} />
           <span className="hidden md:inline">Mon espace</span>
         </Link>
