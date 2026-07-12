@@ -7,13 +7,18 @@ interface ProductCardProps {
   tshirt: Tshirt;
 }
 
+const formatCfaPrice = (value: number) =>
+  Math.trunc(value)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+
 export const ProductCard = ({ tshirt }: ProductCardProps) => {
   // Remplace 'ton-bucket-name' par le nom de ton bucket dans Supabase Storage
   const STORAGE_URL = "https://mkqzvhtwopuikjtpxcce.supabase.co/storage/v1/object/public/images-tshirts/";
   
   const imageUrl = tshirt.image_url 
     ? (tshirt.image_url.startsWith('http') ? tshirt.image_url : `${STORAGE_URL}${tshirt.image_url}`)
-    : '/placeholder-tshirt.png'; // Assure-toi d'avoir une image par défaut dans ton dossier public
+    : '/placeholder-tshirt.png';
 
   return (
     <motion.div
@@ -60,7 +65,7 @@ export const ProductCard = ({ tshirt }: ProductCardProps) => {
         
         <div className="flex justify-between items-center mt-2">
             <p className="text-blue-900 font-bold text-lg">
-            {tshirt.prix_tshirt.toLocaleString()} FCFA
+            {formatCfaPrice(tshirt.prix_tshirt)} FCFA
             </p>
         </div>
 

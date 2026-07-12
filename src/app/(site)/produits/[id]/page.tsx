@@ -5,6 +5,11 @@ import { Montserrat } from 'next/font/google';
 
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['800'] });
 
+const formatCfaPrice = (value: number) =>
+  Math.trunc(value)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
@@ -41,7 +46,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           </h1>
 
           <p className="text-3xl font-semibold text-gray-800">
-            {tshirt.prix_tshirt} CFA
+            {formatCfaPrice(tshirt.prix_tshirt)} FCFA
           </p>
 
           <div className="flex flex-col gap-2 w-full text-sm">

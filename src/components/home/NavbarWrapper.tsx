@@ -1,4 +1,4 @@
-// src/components/layout/NavbarWrapper.tsx
+// src/components/home/NavbarWrapper.tsx
 'use client';
 import { useState, useEffect } from 'react';
 import { Navbar } from './Navbar';
