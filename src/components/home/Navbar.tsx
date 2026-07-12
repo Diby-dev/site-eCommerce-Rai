@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
 const navLinks = [
   { name: 'Produit', href: '/produits' },
@@ -13,22 +14,16 @@ const navLinks = [
   { name: 'Panier', href: '/panier' },
 ];
 
-// 1. Déplacé à l'extérieur : ce n'est plus un composant créé pendant le rendu..
 const SearchBar = () => (
   <div className="hidden lg:flex items-center bg-gray-100 rounded-[100px] mx-8 max-w-md w-full shadow-md border border-gray-200 overflow-hidden">
-    {/* Icône de loupe */}
     <div className="pl-4 text-slate-900">
       <Search size={20} />
     </div>
-    
-    {/* Champ de texte */}
     <input 
       type="text" 
       placeholder="Rechercher un t-shirt..." 
       className="bg-transparent text-gray-800 px-3 py-2 focus:outline-none w-full placeholder:text-gray-500" 
     />
-    
-    {/* Bouton bleu foncé */}
     <button className="bg-[#1e1e8a] hover:bg-blue-900 text-white px-6 py-2 font-medium whitespace-nowrap">
       Rechercher
     </button>
@@ -37,7 +32,32 @@ const SearchBar = () => (
 
 export const Navbar = ({ isVisible, showSearchBar }: { isVisible: boolean; showSearchBar: boolean }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [userName, setUserName] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   const closeMenu = () => setIsMobileMenuOpen(false);
+
+  useEffect(() => {
+    async function fetchUserData(userId: string) {
+      const { data } = await supabase.from('client').select('nom_client').eq('id_client', userId).single();
+      if (data) setUserName(data.nom_client);
+    }
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        setIsLoggedIn(true);
+        fetchUserData(session.user.id);
+      }
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsLoggedIn(!!session);
+      if (session) fetchUserData(session.user.id);
+      else setUserName(null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   return (
     <>
@@ -60,13 +80,19 @@ export const Navbar = ({ isVisible, showSearchBar }: { isVisible: boolean; showS
         )}
 
         <ul className="hidden md:flex items-center gap-8 me-5 font-medium">
-          {navLinks.map((link) => (
-            <li key={link.name}>
-              <Link href={link.href} className="hover:text-blue-400 text-[18px] font-bold transition-colors">
-                {link.name}
-              </Link>
-            </li>
-          ))}
+          {navLinks.map((link) => {
+            const isUserLink = link.name === 'Mon espace';
+            const displayName = isUserLink && isLoggedIn ? (userName || 'Mon compte') : link.name;
+            const displayHref = isUserLink && isLoggedIn ? '/espace-client' : link.href;
+
+            return (
+              <li key={link.name}>
+                <Link href={displayHref} className="hover:text-blue-400 text-[18px] font-bold transition-colors">
+                  {displayName}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         <button 
@@ -82,17 +108,23 @@ export const Navbar = ({ isVisible, showSearchBar }: { isVisible: boolean; showS
 
       <div className={`fixed top-0 left-0 bottom-0 backdrop-blur-sm z-40 w-64 bg-slate-900/65 p-6 pt-24 shadow-2xl transition-transform duration-300 md:hidden ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <ul className="flex flex-col gap-4 text-lg font-medium">
-          {navLinks.map((link) => (
-            <li key={link.name}>
-              <Link 
-                href={link.href} 
-                onClick={closeMenu}
-                className="block py-3 text-white border-b border-slate-700 hover:text-blue-400"
-              >
-                {link.name}
-              </Link>
-            </li>
-          ))}
+          {navLinks.map((link) => {
+             const isUserLink = link.name === 'Mon espace';
+             const displayName = isUserLink && isLoggedIn ? (userName || 'Mon compte') : link.name;
+             const displayHref = isUserLink && isLoggedIn ? '/espace-client' : link.href;
+             
+             return (
+              <li key={link.name}>
+                <Link 
+                  href={displayHref} 
+                  onClick={closeMenu}
+                  className="block py-3 text-white border-b border-slate-700 hover:text-blue-400"
+                >
+                  {displayName}
+                </Link>
+              </li>
+             );
+          })}
         </ul>
       </div>
     </>
