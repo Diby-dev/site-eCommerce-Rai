@@ -49,7 +49,7 @@ export default async function ShopPage() {
             <Link 
               key={item.id_tshirt} 
               href={`/produits/${item.id_tshirt}`} 
-              className="block hover:scale-105 transition-transform duration-300">
+              className="block hover:scale-100 transition-transform duration-300">
               <ProductCard tshirt={item} />
             </Link>
           ))}
