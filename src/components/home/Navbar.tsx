@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
 const navLinks = [
@@ -14,21 +15,44 @@ const navLinks = [
   { name: 'Panier', href: '/panier' },
 ];
 
-const SearchBar = () => (
-  <div className="hidden lg:flex items-center bg-gray-100 rounded-[100px] mx-8 max-w-md w-full shadow-md border border-gray-200 overflow-hidden">
-    <div className="pl-4 text-slate-900">
-      <Search size={20} />
-    </div>
-    <input 
-      type="text" 
-      placeholder="Rechercher un t-shirt..." 
-      className="bg-transparent text-gray-800 px-3 py-2 focus:outline-none w-full placeholder:text-gray-500" 
-    />
-    <button className="bg-[#1e1e8a] hover:bg-blue-900 text-white px-6 py-2 font-medium whitespace-nowrap">
-      Rechercher
-    </button>
-  </div>
-);
+const SearchBar = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('query') || '');
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      router.push(`/?query=${encodeURIComponent(searchTerm.trim())}`);
+    } else {
+      router.push(window.location.pathname);
+    }
+  };
+
+  return (
+    <form 
+      onSubmit={handleSearch}
+      className="hidden lg:flex items-center bg-gray-100 rounded-[100px] mx-8 max-w-md w-full shadow-md border border-gray-200 overflow-hidden"
+    >
+      <div className="pl-4 text-slate-900">
+        <Search size={20} />
+      </div>
+      <input 
+        type="text" 
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="Rechercher un t-shirt..." 
+        className="bg-transparent text-gray-800 px-3 py-2 focus:outline-none w-full placeholder:text-gray-500" 
+      />
+      <button 
+        type="submit"
+        className="bg-[#1e1e8a] hover:bg-blue-900 text-white px-6 py-2 font-medium whitespace-nowrap"
+      >
+        Rechercher
+      </button>
+    </form>
+  );
+};
 
 export const Navbar = ({ isVisible, showSearchBar }: { isVisible: boolean; showSearchBar: boolean }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -66,12 +90,6 @@ export const Navbar = ({ isVisible, showSearchBar }: { isVisible: boolean; showS
         <Link href="/" onClick={closeMenu} className="z-50 ms-5">
           <Image src="/logo.png" alt="Logo" width={150} height={50} priority className="w-14 md:w-20 h-auto" />
         </Link>
-
-        {showSearchBar && (
-           <div className="w-full md:hidden mt-4">
-             <SearchBar />
-           </div>
-        )}
 
         {showSearchBar && (
            <div className="hidden md:block flex-1 mx-8 max-w-md">

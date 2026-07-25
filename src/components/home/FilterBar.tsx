@@ -1,5 +1,5 @@
 'use client';
-
+import Link from 'next/link';
 import { Filter } from 'lucide-react';
 
 export const FilterBar = () => {
@@ -26,9 +26,11 @@ export const FilterBar = () => {
       </div>
 
       {/* Bouton principal */}
-      <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-full text-sm font-medium transition-colors">
-        tout afficher
-      </button>
+      <Link href="/">
+        <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-full text-sm font-medium transition-colors">
+          tout afficher
+        </button>
+      </Link>
     </div>
   );
 };
