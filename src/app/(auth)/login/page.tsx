@@ -51,7 +51,7 @@ export default function Loginpage() {
 
         {/* Ton champ mot de passe */}
         <div>
-          <label className="block mb-2 text-sm font-medium text-slate-700">Mot de passe</label>
+          <label className="block mb-2 text-sm font-medium text-slate-700">Entrez le mot de passe que vous avez créé sur notre site</label>
           <input name="password" type="password" required className="w-full border text-slate-950 border-gray-300 rounded-md px-4 py-3 focus:ring-2 focus:ring-sky-400 outline-none transition" />
         </div>
       </div>

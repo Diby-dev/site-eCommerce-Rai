@@ -68,12 +68,6 @@ export const Navbar = ({ isVisible, showSearchBar }: { isVisible: boolean; showS
         </Link>
 
         {showSearchBar && (
-           <div className="w-full md:hidden mt-4">
-             <SearchBar />
-           </div>
-        )}
-
-        {showSearchBar && (
            <div className="hidden md:block flex-1 mx-8 max-w-md">
              <SearchBar />
            </div>

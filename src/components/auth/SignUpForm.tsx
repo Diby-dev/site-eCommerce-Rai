@@ -89,7 +89,7 @@ export default function SignUpForm() {
         </div>
 
         <div>
-          <label htmlFor="password" className="block mb-2 text-sm font-medium text-slate-700">Mot de passe</label>
+          <label htmlFor="password" className="block mb-2 text-sm font-medium text-slate-700">Créer un mot de passe</label>
           <input id="password" name="password" type="password" autoComplete="new-password" minLength={8} placeholder="Minimum 8 caractères" required className="w-full border text-slate-700 border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 transition" />
         </div>
       </div>
