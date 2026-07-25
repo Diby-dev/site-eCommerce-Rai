@@ -11,21 +11,56 @@ import { supabase } from '@/lib/supabase';
 import { Tshirt } from '@/types/database';
 
 interface ShopPageProps {
-  searchParams: Promise<{ query?: string }>;
+  searchParams: Promise<{ 
+    query?: string;
+    couleur?: string;
+    statut?: string;
+    taille?: string;
+    prix?: string;
+  }>;
 }
 
 export default async function ShopPage({ searchParams }: ShopPageProps) {
   const resolvedParams = await searchParams;
   const searchQuery = resolvedParams?.query || '';
+  const couleurQuery = resolvedParams?.couleur || '';
+  const statutQuery = resolvedParams?.statut || '';
+  const tailleQuery = resolvedParams?.taille || '';
+  const prixQuery = resolvedParams?.prix || '';
 
-  // Construction de la requête Supabase avec filtre optionnel
-  let query = supabase.from('tshirt').select('*').order('date_tshirt', { ascending: false });
+  // Construction de la requête Supabase avec filtres dynamiques
+  let query = supabase.from('tshirt').select('*');
 
   if (searchQuery) {
     query = query.ilike('nom_tshirt', `%${searchQuery}%`);
   }
+  if (couleurQuery) {
+    query = query.eq('couleur_tshirt', couleurQuery);
+  }
+  if (statutQuery) {
+    query = query.eq('statut_tshirt', statutQuery);
+  }
+  if (tailleQuery) {
+    query = query.eq('taille_tshirt', tailleQuery);
+  }
+
+  // Gestion du tri
+  if (prixQuery === 'asc') {
+    query = query.order('prix_tshirt', { ascending: true });
+  } else if (prixQuery === 'desc') {
+    query = query.order('prix_tshirt', { ascending: false });
+  } else {
+    query = query.order('id_tshirt', { ascending: false });
+  }
 
   const { data: tshirts, error } = await query;
+
+  // Récupération de tous les t-shirts pour extraire dynamiquement les filtres uniques
+  const { data: allTshirts } = await supabase.from('tshirt').select('couleur_tshirt, statut_tshirt, taille_tshirt');
+
+  const couleursDisponibles: string[] = Array.from(new Set(allTshirts?.map(t => t.couleur_tshirt).filter(Boolean))) as string[];
+  const statutsDisponibles: string[] = Array.from(new Set(allTshirts?.map(t => t.statut_tshirt).filter(Boolean))) as string[];
+  const taillesDisponibles: string[] = Array.from(new Set(allTshirts?.map(t => t.taille_tshirt).filter(Boolean))) as string[];
 
   if (error) {
     console.error("Erreur Supabase:", error);
@@ -44,7 +79,11 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
               Trouvez votre style avec nos<br/>t-shirts de qualité
             </h1>
             <SearchBar />
-            <FilterBar />
+            <FilterBar 
+              couleurs={couleursDisponibles} 
+              statuts={statutsDisponibles} 
+              tailles={taillesDisponibles} 
+            />
           </div>
 
           <div className="mt-8 mb-4 bg-purple-700 text-white px-6 py-3 rounded-full flex justify-between items-center shadow-md">
