@@ -68,7 +68,7 @@ export const FilterBar = ({ couleurs, statuts, tailles }: FilterBarProps) => {
           ))}
         </select>
 
-        {/* Filtre Prix (Tri) */}
+        {/* Filtre Prix (Tri)*/}
         <select 
           value={currentPrix}
           onChange={(e) => handleFilterChange('prix', e.target.value)}
