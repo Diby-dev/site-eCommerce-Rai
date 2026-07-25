@@ -58,9 +58,9 @@ export const FilterBar = ({ couleurs, statuts, tailles }: FilterBarProps) => {
         <select 
           value={currentStatut}
           onChange={(e) => handleFilterChange('statut', e.target.value)}
-          className="bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors focus:outline-none capitalize"
+          className="w-24 bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors focus:outline-none capitalize"
         >
-          <option value="">Status</option>
+          <option value="">Statut</option>
           {statuts.map((statut) => (
             <option key={statut} value={statut}>
               {statut}
@@ -72,7 +72,7 @@ export const FilterBar = ({ couleurs, statuts, tailles }: FilterBarProps) => {
         <select 
           value={currentPrix}
           onChange={(e) => handleFilterChange('prix', e.target.value)}
-          className="bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors focus:outline-none"
+          className="w-20 bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors focus:outline-none"
         >
           <option value="">Prix</option>
           <option value="asc">Croissant</option>
