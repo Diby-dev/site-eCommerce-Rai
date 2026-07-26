@@ -148,6 +148,23 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             </div>
           </div>
         </div>
+        
+        <div className="bg-white px-7 lg:px-15 py-10 mt-10">
+          <div className="text-center mb-10">
+            <h2 className="text-orange-600 font-medium text-sm">Mode de paiement</h2>
+            <h1 className="text-base md:text-2xl lg:text-3xl font-bold text-gray-900 mt-2">
+              Comment payer
+            </h1>
+          </div>
+
+          <p className="text-black">
+            Ne vous inquiétez pas. Vous pouvez suivre les 
+            progrès du groupe pour voir comment les autres 
+            accomplissent les tâches 
+            et reçoivent leurs gains. Prévenez-moi dès que vous serez prêt(e) à commencer la tâche 4.
+          </p>
+
+          </div>
       </main>
       <Footer />
     </div>
