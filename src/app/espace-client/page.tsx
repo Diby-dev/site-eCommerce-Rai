@@ -41,7 +41,7 @@ export default function EspaceClient() {
   return (
     <>
     <Navbar />
-    <main className="bg-white mt-20">
+    <main className="bg-[url('/fond.jpg')] bg-cover bg-center bg-no-repeat mt-20">
     <div className="max-w-7xl mx-auto px-4 py-10">
       <div className="flex flex-col lg:grid lg:grid-cols-[260px_1fr] gap-8">
         
