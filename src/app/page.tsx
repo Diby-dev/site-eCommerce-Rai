@@ -5,6 +5,7 @@ import { FilterBar } from '@/components/home/FilterBar';
 import { ProductCard } from '@/components/home/ProductCard';
 import { Conectshar } from '@/components/home/Conectshar';
 import { Footer } from '@/components/layout/Footer';
+import { CommentSection } from '@/components/home/CommentSection';
 
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
@@ -68,7 +69,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-[url('/fond.jpg')] bg-cover bg-center bg-no-repeat">
       <NavbarWrapper />
       <HeroImage />
       <main>
@@ -149,22 +150,24 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
           </div>
         </div>
         
-        <div className="bg-white px-7 lg:px-15 py-10 mt-10">
-          <div className="text-center mb-10">
-            <h2 className="text-orange-600 font-medium text-sm">Mode de paiement</h2>
-            <h1 className="text-base md:text-2xl lg:text-3xl font-bold text-gray-900 mt-2">
-              Comment payer
-            </h1>
-          </div>
+        <div className="bg-sky-50 px-7 lg:px-15 py-10 mt-10">
+  <div className="text-center mb-10">
+    <h2 className="text-orange-600 font-medium text-sm">Mode de paiement</h2>
+    <h1 className="text-base md:text-2xl lg:text-3xl font-bold text-gray-900 mt-2">
+      Comment payer
+    </h1>
+  </div>
 
-          <p className="text-black">
-            Ne vous inquiétez pas. Vous pouvez suivre les 
-            progrès du groupe pour voir comment les autres 
-            accomplissent les tâches 
-            et reçoivent leurs gains. Prévenez-moi dès que vous serez prêt(e) à commencer la tâche 4.
-          </p>
-
-          </div>
+  <div className="max-w-3xl mx-auto text-gray-700 text-sm md:text-base leading-relaxed space-y-4 text-center md:text-left">
+    <p>
+      Chez <span className="font-bold text-gray-900">E-Shirt-R</span>, les paiements ne se font pas directement en ligne pour privilégier la proximité. Pour commander, il vous suffit de choisir votre article et de cliquer sur le bouton orange <span className="font-bold text-orange-600">&ldquo;Acheter maintenant&rdquo;</span> sur la page du produit.
+    </p>
+    <p>
+      Vous serez directement mis en relation avec le vendeur par <span className="font-bold text-gray-900">WhatsApp</span> ou par <span className="font-bold text-gray-900">téléphone</span>. Cet échange vous permettra de vous mettre d&apos;accord facilement sur le <span className="font-bold text-gray-900">mode de paiement</span>, les <span className="font-bold text-gray-900">modalités de livraison</span> ou un <span className="font-bold text-gray-900">retrait sur site</span>.
+    </p>
+  </div>
+</div>
+          <CommentSection />
       </main>
       <Footer />
     </div>

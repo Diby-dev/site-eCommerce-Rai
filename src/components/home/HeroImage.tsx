@@ -66,6 +66,18 @@ export function HeroImage() {
         </div>
       </div>
 
+      {/* Overlay sombre */}
+<div className="absolute inset-0 bg-black/35 z-1" />
+
+{/* Vignette */}
+<div
+  className="absolute inset-0 z-2"
+  style={{
+    background:
+      "radial-gradient(circle, rgba(0,0,0,0) 35%, rgba(0,0,0,0.25) 65%, rgba(0,0,0,0.75) 100%)",
+  }}
+/>
+
       {/* 2. Le Logo */}
       <div className="absolute top-4 left-4 md:top-8 md:left-8 z-20">
         <Image src="/logo.png" alt="Logo" width={200} height={200} priority className="w-16 md:w-24 lg:w-25 h-auto drop-shadow-md" />

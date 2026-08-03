@@ -11,7 +11,7 @@ const navLinks = [
   { name: 'Produit', href: '/produits' },
   { name: 'Avis', href: '/avis' },
   { name: 'Partager', href: '/partager' },
-  { name: 'Mon espace', href: '/compte' },
+  { name: 'Mon espace', href: '/inscription' },
   { name: 'Panier', href: '/panier' },
 ];
 
