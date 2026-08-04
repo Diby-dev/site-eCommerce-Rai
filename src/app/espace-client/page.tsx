@@ -19,6 +19,7 @@ export default function EspaceClient() {
   const [clientData, setClientData] = useState<ClientProfile | null>(null);
   const [historiqueTshirts, setHistoriqueTshirts] = useState<Tshirt[]>([]);
   const [favorisTshirts, setFavorisTshirts] = useState<Tshirt[]>([]);
+  const [panierTshirts, setPanierTshirts] = useState<Tshirt[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>('profil');
   const router = useRouter();
@@ -99,6 +100,34 @@ export default function EspaceClient() {
     fetchFavoris();
   }, [activeTab, user]);
 
+  // Charger le panier
+  useEffect(() => {
+    async function fetchPanier() {
+      if (activeTab === 'panier' && user) {
+        const { data, error } = await supabase
+          .from('panier')
+          .select(`
+            id_tshirt,
+            tshirt:id_tshirt (*)
+          `)
+          .eq('id_client', user.id);
+
+        if (!error && data) {
+          const tshirtsList: Tshirt[] = data
+            .map((item: Record<string, unknown>) => {
+              const t = item.tshirt;
+              if (Array.isArray(t)) return (t[0] as Tshirt) || null;
+              return (t as Tshirt) || null;
+            })
+            .filter((t): t is Tshirt => t !== null && t !== undefined);
+
+          setPanierTshirts(tshirtsList);
+        }
+      }
+    }
+    fetchPanier();
+  }, [activeTab, user]);
+
   const menuClass = (tab: Tab) => 
     `flex items-center gap-2 px-4 py-3 rounded-lg transition-all font-medium whitespace-nowrap ${
       activeTab === tab ? 'bg-orange-500 text-white' : 'text-blue-100 hover:bg-blue-800'
@@ -167,7 +196,28 @@ export default function EspaceClient() {
                       ))}
                     </div>
                   ) : (
-                    <p className="text-gray-500 py-12 text-center">Pas t-shirt dans vos favoris pour le moment.</p>
+                    <p className="text-gray-500 py-12 text-center">Pas de t-shirt dans vos favoris pour le moment.</p>
+                  )}
+                </div>
+              )}
+
+              {activeTab === 'panier' && (
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900 mb-6">Mon Panier</h2>
+                  {panierTshirts.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {panierTshirts.map((tshirt) => (
+                        <Link 
+                          key={tshirt.id_tshirt} 
+                          href={`/produits/${tshirt.id_tshirt}`}
+                          className="block transition-transform duration-300"
+                        >
+                          <ProductCard tshirt={tshirt} />
+                        </Link>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-gray-500 py-12 text-center">Votre panier est vide pour le moment.</p>
                   )}
                 </div>
               )}
@@ -191,10 +241,6 @@ export default function EspaceClient() {
                     <p className="text-gray-500 py-12 text-center">Vous n&apos;avez consulté aucun t-shirt pour le moment.</p>
                   )}
                 </div>
-              )}
-
-              {activeTab !== 'profil' && activeTab !== 'historique' && activeTab !== 'favoris' && (
-                <div className="py-16 text-center text-gray-500">Contenu de {activeTab} à venir...</div>
               )}
             </section>
           </div>

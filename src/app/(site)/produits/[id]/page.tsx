@@ -4,6 +4,7 @@ import { Tshirt } from '@/types/database';
 import { Montserrat } from 'next/font/google';
 import { RecordHistory } from '@/components/user/RecordHistory';
 import { AddToFavoriteButton } from '@/components/user/AddToFavoriteButton'; // <--- Import du composant favoris
+import { AddToCartButton } from '@/components/user/AddToCartButton';
 
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['800'] });
 
@@ -66,9 +67,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             {/* Utilisation du composant interactif favoris */}
             <AddToFavoriteButton tshirtId={tshirt.id_tshirt} />
             
-            <button className="w-64 bg-white text-black py-3 rounded font-bold border-2 border-slate-500 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(34,197,94,0.5)]">
-              Ajouter au panier
-            </button>
+            <AddToCartButton tshirtId={tshirt.id_tshirt} />
           </div>
 
           <button className="w-full bg-orange-600 text-white py-4 rounded font-bold text-lg hover:bg-orange-700 transition-all">
