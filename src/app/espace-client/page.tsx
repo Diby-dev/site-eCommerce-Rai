@@ -18,6 +18,7 @@ export default function EspaceClient() {
   const [user, setUser] = useState<User | null>(null);
   const [clientData, setClientData] = useState<ClientProfile | null>(null);
   const [historiqueTshirts, setHistoriqueTshirts] = useState<Tshirt[]>([]);
+  const [favorisTshirts, setFavorisTshirts] = useState<Tshirt[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>('profil');
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function EspaceClient() {
     getProfile();
   }, [router]);
 
-  // Charger l'historique quand l'onglet "historique" est actif
+  // Charger l'historique
   useEffect(() => {
     async function fetchHistorique() {
       if (activeTab === 'historique' && user) {
@@ -49,7 +50,6 @@ export default function EspaceClient() {
           .order('date_action', { ascending: false });
 
         if (!error && data) {
-          // Extraction sécurisée sans utiliser 'any'
           const tshirtsList: Tshirt[] = data
             .map((item: Record<string, unknown>) => {
               const t = item.tshirt;
@@ -58,7 +58,6 @@ export default function EspaceClient() {
             })
             .filter((t): t is Tshirt => t !== null && t !== undefined);
 
-          // Filtrer pour éviter les doublons si un t-shirt a été consulté plusieurs fois
           const uniqueTshirts = Array.from(
             new Map(tshirtsList.map((t: Tshirt) => [t.id_tshirt, t])).values()
           ) as Tshirt[];
@@ -70,7 +69,36 @@ export default function EspaceClient() {
     fetchHistorique();
   }, [activeTab, user]);
 
-  // Classes pour le menu (Adaptatif)
+  // Charger les favoris
+  useEffect(() => {
+    async function fetchFavoris() {
+      if (activeTab === 'favoris' && user) {
+        const { data, error } = await supabase
+          .from('favori')
+          .select(`
+            id_tshirt,
+            date_favori,
+            tshirt:id_tshirt (*)
+          `)
+          .eq('id_client', user.id)
+          .order('date_favori', { ascending: false });
+
+        if (!error && data) {
+          const tshirtsList: Tshirt[] = data
+            .map((item: Record<string, unknown>) => {
+              const t = item.tshirt;
+              if (Array.isArray(t)) return (t[0] as Tshirt) || null;
+              return (t as Tshirt) || null;
+            })
+            .filter((t): t is Tshirt => t !== null && t !== undefined);
+
+          setFavorisTshirts(tshirtsList);
+        }
+      }
+    }
+    fetchFavoris();
+  }, [activeTab, user]);
+
   const menuClass = (tab: Tab) => 
     `flex items-center gap-2 px-4 py-3 rounded-lg transition-all font-medium whitespace-nowrap ${
       activeTab === tab ? 'bg-orange-500 text-white' : 'text-blue-100 hover:bg-blue-800'
@@ -85,7 +113,7 @@ export default function EspaceClient() {
         <div className="max-w-7xl mx-auto px-4 py-10">
           <div className="flex flex-col lg:grid lg:grid-cols-[260px_1fr] gap-8">
             
-            {/* SIDEBAR / NAVBAR ADAPTATIVE */}
+            {/* SIDEBAR */}
             <aside className="bg-slate-900 rounded-2xl shadow-xl p-4 lg:p-5 h-fit">
               <nav className="flex lg:flex-col gap-2 lg:space-y-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 scrollbar-hide">
                 {[
@@ -123,6 +151,27 @@ export default function EspaceClient() {
                 </div>
               )}
 
+              {activeTab === 'favoris' && (
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900 mb-6">Mes produits favoris</h2>
+                  {favorisTshirts.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {favorisTshirts.map((tshirt) => (
+                        <Link 
+                          key={tshirt.id_tshirt} 
+                          href={`/produits/${tshirt.id_tshirt}`}
+                          className="block transition-transform duration-300"
+                        >
+                          <ProductCard tshirt={tshirt} />
+                        </Link>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-gray-500 py-12 text-center">Pas t-shirt dans vos favoris pour le moment.</p>
+                  )}
+                </div>
+              )}
+
               {activeTab === 'historique' && (
                 <div>
                   <h2 className="text-xl font-bold text-gray-900 mb-6">Vos produits consultés</h2>
@@ -144,7 +193,7 @@ export default function EspaceClient() {
                 </div>
               )}
 
-              {activeTab !== 'profil' && activeTab !== 'historique' && (
+              {activeTab !== 'profil' && activeTab !== 'historique' && activeTab !== 'favoris' && (
                 <div className="py-16 text-center text-gray-500">Contenu de {activeTab} à venir...</div>
               )}
             </section>
