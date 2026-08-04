@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
 import { Tshirt } from '@/types/database';
 import { Montserrat } from 'next/font/google';
+import { RecordHistory } from '@/components/user/RecordHistory';
 
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['800'] });
 
@@ -26,6 +27,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     // Le layout gère tout cela automatiquement.
     <main className="min-h-screen bg-white text-gray-900 pt-32 px-6 lg:px-24">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+        <RecordHistory tshirtId={tshirt.id_tshirt} />
         
         {/* IMAGE */}
         <div className="w-full">
