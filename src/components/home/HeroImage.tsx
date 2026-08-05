@@ -94,7 +94,7 @@ export function HeroImage() {
             {session ? (userName || "Mon compte") : "Mon espace"}
           </span>
         </Link>
-        <Link href="/cart" className="flex items-center gap-2 text-white font-medium bg-black/40 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2 rounded-full text-sm hover:bg-black/60 transition-all">
+        <Link href="/espace-client" className="flex items-center gap-2 text-white font-medium bg-black/40 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2 rounded-full text-sm hover:bg-black/60 transition-all">
           <ShoppingBag size={16} />
           <span className="">Panier</span>
         </Link>
