@@ -5,6 +5,7 @@ import { Montserrat } from 'next/font/google';
 import { RecordHistory } from '@/components/user/RecordHistory';
 import { AddToFavoriteButton } from '@/components/user/AddToFavoriteButton'; // <--- Import du composant favoris
 import { AddToCartButton } from '@/components/user/AddToCartButton';
+import { BuyModalButton } from '@/components/user/BuyModalButton';
 
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['800'] });
 
@@ -70,9 +71,9 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             <AddToCartButton tshirtId={tshirt.id_tshirt} />
           </div>
 
-          <button className="w-full bg-orange-600 text-white py-4 rounded font-bold text-lg hover:bg-orange-700 transition-all">
-            ACHETER MAINTENANT
-          </button>
+          <div className="w-full mt-2">
+            <BuyModalButton tshirtName={tshirt.nom_tshirt} />
+          </div>
         </div>
       </div>
 
