@@ -8,6 +8,7 @@ import { Footer } from '@/components/layout/Footer';
 import { CommentSection } from '@/components/home/CommentSection';
 
 import Link from 'next/link';
+import { Lock } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { Tshirt } from '@/types/database';
 
@@ -150,23 +151,34 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
           </div>
         </div>
         
-        <div className="bg-sky-50 px-7 lg:px-15 py-10 mt-10">
-  <div className="text-center mb-10">
-    <h2 className="text-orange-600 font-medium text-sm">Mode de paiement</h2>
-    <h1 className="text-base md:text-2xl lg:text-3xl font-bold text-gray-900 mt-2">
-      Comment payer
-    </h1>
-  </div>
+        <div className="bg-sky-50 px-7 lg:px-15 py-10 mt-10 relative">
+          <div className="text-center mb-10">
+            <h2 className="text-orange-600 font-medium text-sm">Mode de paiement</h2>
+            <h1 className="text-base md:text-2xl lg:text-3xl font-bold text-gray-900 mt-2">
+              Comment payer
+            </h1>
+          </div>
 
-  <div className="max-w-3xl mx-auto text-gray-700 text-sm md:text-base leading-relaxed space-y-4 text-center md:text-left">
-    <p>
-      Chez <span className="font-bold text-gray-900">E-Shirt-R</span>, les paiements ne se font pas directement en ligne pour privilégier la proximité. Pour commander, il vous suffit de choisir votre article et de cliquer sur le bouton orange <span className="font-bold text-orange-600">&ldquo;Acheter maintenant&rdquo;</span> sur la page du produit.
-    </p>
-    <p>
-      Vous serez directement mis en relation avec le vendeur par <span className="font-bold text-gray-900">WhatsApp</span> ou par <span className="font-bold text-gray-900">téléphone</span>. Cet échange vous permettra de vous mettre d&apos;accord facilement sur le <span className="font-bold text-gray-900">mode de paiement</span>, les <span className="font-bold text-gray-900">modalités de livraison</span> ou un <span className="font-bold text-gray-900">retrait sur site</span>.
-    </p>
-  </div>
-</div>
+          <div className="max-w-3xl mx-auto text-gray-700 text-sm md:text-base leading-relaxed space-y-4 text-center md:text-left">
+            <p>
+              Chez <span className="font-bold text-gray-900">E-Shirt-R</span>, les paiements ne se font pas directement en ligne pour privilégier la proximité. Pour commander, il vous suffit de choisir votre article et de cliquer sur le bouton orange <span className="font-bold text-orange-600">&ldquo;Acheter maintenant&rdquo;</span> sur la page du produit.
+            </p>
+            <p>
+              Vous serez directement mis en relation avec le vendeur par <span className="font-bold text-gray-900">WhatsApp</span> ou par <span className="font-bold text-gray-900">téléphone</span>. Cet échange vous permettra de vous mettre d&apos;accord facilement sur le <span className="font-bold text-gray-900">mode de paiement</span>, les <span className="font-bold text-gray-900">modalités de livraison</span> ou un <span className="font-bold text-gray-900">retrait sur site</span>.
+            </p>
+          </div>
+
+          {/* Bouton Admin Discret : Cercle gris + Cadenas */}
+          <div className="absolute bottom-4 right-4">
+            <Link 
+              href="/admin/login" 
+              className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-300 hover:text-gray-800 transition-all shadow-xs"
+              title="Espace Administrateur"
+            >
+              <Lock size={14} />
+            </Link>
+          </div>
+        </div>
           <CommentSection />
       </main>
       <Footer />
