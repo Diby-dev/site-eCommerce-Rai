@@ -58,7 +58,7 @@ export function SidebarAdmin({ adminName = "Admin" }: SidebarAdminProps) {
             </Link>
 
             <Link 
-              href="/admin/dashboard/modifier" 
+              href="/admin/dashboard" 
               className="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-800 transition-colors w-full group"
             >
               <Edit size={22} className="shrink-0 text-sky-400 group-hover:scale-110 transition-transform" />
@@ -112,7 +112,7 @@ export function SidebarAdmin({ adminName = "Admin" }: SidebarAdminProps) {
 
         {/* Option Modifier */}
         <Link 
-          href="/admin/dashboard/modifier" 
+          href="/admin/dashboard" 
           className="flex flex-col items-center gap-1 text-gray-600 hover:text-sky-600 transition-colors"
         >
           <Edit size={20} />
