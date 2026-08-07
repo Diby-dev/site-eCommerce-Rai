@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import { SidebarAdmin } from './SidebarAdmin';
-import { Shirt, ExternalLink } from 'lucide-react';
+import { Shirt, ExternalLink, Plus } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function AdminDashboardPage() {
@@ -33,7 +33,7 @@ export default async function AdminDashboardPage() {
       {/* Corps de la page */}
       <main className="flex-1 md:ml-20 p-6 lg:p-12 pb-24 md:pb-12 transition-all">
         
-        {/* En-tête avec le raccourci vers la boutique */}
+        {/* En-tête avec le raccourci vers la boutique et le bouton d'ajout */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
           <div>
             <h1 className="text-3xl lg:text-4xl font-extrabold text-gray-900">
@@ -44,14 +44,26 @@ export default async function AdminDashboardPage() {
             </p>
           </div>
 
-          {/* Raccourci vers la page principale */}
-          <Link 
-            href="/" 
-            className="self-start sm:self-auto inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-gray-200 text-gray-700 hover:text-orange-600 hover:border-orange-200 hover:shadow-sm transition-all text-sm font-semibold"
-          >
-            <span>Voir la boutique</span>
-            <ExternalLink size={16} />
-          </Link>
+          {/* Groupe de boutons d'action */}
+          <div className="flex items-center gap-3 flex-wrap">
+            {/* Bouton pour ajouter un t-shirt */}
+            <Link 
+              href="/admin/dashboard/ajouter" 
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-orange-600 text-white hover:bg-orange-700 shadow-md shadow-orange-600/20 transition-all text-sm font-semibold"
+            >
+              <Plus size={18} />
+              <span>Ajouter un t-shirt</span>
+            </Link>
+
+            {/* Raccourci vers la page principale */}
+            <Link 
+              href="/" 
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-gray-200 text-gray-700 hover:text-orange-600 hover:border-orange-200 hover:shadow-sm transition-all text-sm font-semibold"
+            >
+              <span>Voir la boutique</span>
+              <ExternalLink size={16} />
+            </Link>
+          </div>
         </div>
 
         {/* Bloc Stylé et Unique pour les T-shirts */}
