@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { Lock, Mail, KeyRound } from 'lucide-react';
 import Link from 'next/link';
@@ -14,6 +14,8 @@ export default async function AdminLoginPage({
   // Server Action pour traiter la connexion
   async function handleAdminLogin(formData: FormData) {
     'use server';
+
+    const supabase = await createServerSupabaseClient();
 
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;

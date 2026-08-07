@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { requireAdmin } from '@/lib/auth/require-admin';
 import { SidebarAdmin } from './SidebarAdmin';
 import { Shirt, ExternalLink, Plus, Edit } from 'lucide-react';
 import DeleteButton from './DeleteButton';
@@ -16,6 +16,7 @@ export default async function AdminDashboardPage({
 }: {
   searchParams: Promise<{ query?: string }>;
 }) {
+  const { supabase, admin } = await requireAdmin();
   const resolvedParams = await searchParams;
   const searchQuery = resolvedParams?.query || '';
 
@@ -36,21 +37,7 @@ export default async function AdminDashboardPage({
 
   const { data: tshirts, error: tshirtsError } = await query;
 
-  // 3. Récupération sécurisée de l'administrateur connecté
-  const { data: { user } } = await supabase.auth.getUser();
-  let adminName = "Administrateur";
-
-  if (user?.email) {
-    const { data: adminData } = await supabase
-      .from('admis')
-      .select('nom_admis')
-      .eq('email_admis', user.email)
-      .single();
-    
-    if (adminData) {
-      adminName = adminData.nom_admis;
-    }
-  }
+  const adminName = admin.nom_admis || 'Administrateur';
 
   const STORAGE_URL = "https://mkqzvhtwopuikjtpxcce.supabase.co/storage/v1/object/public/images-tshirts/";
 

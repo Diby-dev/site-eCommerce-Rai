@@ -1,10 +1,18 @@
 'use server';
 
-import { supabase } from '@/lib/supabase';
+import { requireAdmin } from '@/lib/auth/require-admin';
 import { revalidatePath } from 'next/cache';
 
-export async function deleteTshirt(id: string) {
+export async function deleteTshirt(id: number) {
   try {
+    if (typeof id !== 'number' || !Number.isInteger(id) || id < 1) {
+      return { success: false, error: 'Identifiant de produit invalide.' };
+    }
+
+    // Une Server Action peut être appelée sans passer par l'interface :
+    // l'autorisation doit donc être contrôlée à nouveau ici.
+    const { supabase } = await requireAdmin();
+
     // 1. Récupérer le t-shirt pour trouver l'URL de l'image
     const { data: tshirt, error: fetchError } = await supabase
       .from('tshirt')

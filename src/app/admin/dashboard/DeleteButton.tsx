@@ -5,7 +5,7 @@ import { Trash2 } from 'lucide-react';
 import { deleteTshirt } from './actions';
 
 interface DeleteButtonProps {
-  id: string;
+  id: number;
   nom: string;
 }
 

@@ -142,6 +142,7 @@ export default function AjouterTshirtPage() {
               <input 
                 type="text"
                 required
+                maxLength={50}
                 value={nom}
                 onChange={(e) => setNom(e.target.value)}
                 placeholder="Ex: T-shirt Oversize Édition Limitée"
@@ -171,9 +172,10 @@ export default function AjouterTshirtPage() {
                   Couleur
                 </label>
                 <input 
-                  type="text"
-                  required
-                  value={couleur}
+                type="text"
+                required
+                maxLength={25}
+                value={couleur}
                   onChange={(e) => setCouleur(e.target.value)}
                   placeholder="Ex: Noir, Blanc..."
                   className="w-full bg-gray-50 border border-gray-300 rounded-xl py-3 px-4 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:bg-white transition-all"
@@ -185,8 +187,9 @@ export default function AjouterTshirtPage() {
                   Taille
                 </label>
                 <input 
-                  type="text"
-                  value={taille}
+                type="text"
+                maxLength={15}
+                value={taille}
                   onChange={(e) => setTaille(e.target.value)}
                   placeholder="Ex: M, L, XL..."
                   className="w-full bg-gray-50 border border-gray-300 rounded-xl py-3 px-4 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:bg-white transition-all"
