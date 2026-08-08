@@ -16,8 +16,8 @@ export const Footer = () => {
                 <Image 
                   src="/logo.png" // Ton fichier dans le dossier public
                   alt="KingShop Logo"
-                  width={65}  // Ajuste la largeur selon ton logo
-                  height={20}  // Ajuste la hauteur selon ton logo
+                  width={62}  // Ajuste la largeur selon ton logo
+                  height={15}  // Ajuste la hauteur selon ton logo
                   className="w-auto h-auto"
                 />
               </Link>
