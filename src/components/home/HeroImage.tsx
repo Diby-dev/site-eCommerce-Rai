@@ -9,7 +9,7 @@ import { User, ShoppingBag } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { Session } from '@supabase/supabase-js';
 
-const images = ['/1.webp', '/3.webp', '/5.webp'];
+const images = ['/1.webp', '/2.webp', '/3.webp', '/4.webp'];
 
 export function HeroImage() {
   const [session, setSession] = useState<Session | null>(null);

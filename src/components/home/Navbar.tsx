@@ -8,11 +8,11 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
 const navLinks = [
-  { name: 'Produit', href: '/produits' },
-  { name: 'Avis', href: '/avis' },
-  { name: 'Partager', href: '/partager' },
+  { name: 'Produit', href: '/#produits' },
+  { name: 'Avis', href: '/#avis' },
+  { name: 'Partager', href: '/#partager' },
   { name: 'Mon espace', href: '/inscription' },
-  { name: 'Panier', href: '/panier' },
+  { name: 'Panier', href: '/espace-client' },
 ];
 
 const SearchBar = () => {
@@ -85,7 +85,7 @@ export const Navbar = ({ isVisible, showSearchBar }: { isVisible: boolean; showS
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full z-50 bg-slate-900/80 backdrop-blur-sm p-4 flex justify-between items-center text-white shadow-[0_10px_6px_-1px_rgba(0,0,0,0.3)] transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+      <nav className={`fixed top-0 left-0 w-full z-50 bg-taupe-900/80 backdrop-blur-sm p-4 flex justify-between items-center text-white shadow-[0_10px_6px_-1px_rgba(0,0,0,0.3)] transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         
         <Link href="/" onClick={closeMenu} className="z-50 ms-5">
           <Image src="/logo.png" alt="Logo" width={150} height={50} priority className="w-14 md:w-20 h-auto" />

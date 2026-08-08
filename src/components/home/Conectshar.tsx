@@ -77,7 +77,7 @@ export const Conectshar = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 max-w-4xl mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 max-w-4xl mx-auto" id="partager">
       <button 
         onClick={handleShareClick}
         className="border border-gray-400 rounded-3xl p-6 shadow-2xl transition-all duration-300 flex flex-col items-center gap-2 hover:scale-105 hover:shadow-3xl"

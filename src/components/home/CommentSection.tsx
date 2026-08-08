@@ -4,7 +4,7 @@ import React from 'react';
 
 export const CommentSection = () => {
   return (
-    <div className="bg-sky-100 px-7 lg:px-15 py-10">
+    <div className="bg-sky-100 px-7 lg:px-15 py-10" id="avis">
         <div className="text-center mb-10">
             <h2 className="text-orange-600 font-medium text-sm">Les Avis sur nos services</h2>
             <h1 className="text-base md:text-2xl lg:text-3xl font-bold text-gray-900 mt-2">
@@ -28,7 +28,7 @@ export const CommentSection = () => {
 
           <button 
             type="button"
-            onClick={() => alert("Fonctionnalité bientôt disponible !")}
+            onClick={() => alert("Fonctionnalité suspendue pour des raisons de maintenance !")}
             className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2.5 rounded-full text-sm font-medium transition-colors shadow-md flex items-center gap-2 cursor-pointer"
           >
             <span>Laisser un commentaire</span>

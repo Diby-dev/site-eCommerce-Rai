@@ -94,7 +94,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
           </div>
 
           {/* Grille des produits */}
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6" id="produits">
             {tshirts && tshirts.length > 0 ? (
               tshirts.map((item: Tshirt) => (
                 <Link 
