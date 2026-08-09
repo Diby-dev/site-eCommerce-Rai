@@ -51,8 +51,8 @@ export default function SignUpForm() {
         <div className="text-4xl mb-4">📧</div>
         <h2 className="text-2xl font-bold text-gray-900 mb-4">Vérifiez votre boîte mail</h2>
         <p className="text-gray-600 mb-8">
-          Un lien de confirmation a été envoyé à votre adresse mail. 
-          Cliquez dessus (sur le lien Confirm email address) pour terminer la création de votre compte.
+          Un lien de confirmation a été envoyé à votre adresse mail, vous verez un mail envoyé par Supabase. 
+          Cliquez dessus (sur le lien en bleu Confirm email address) pour terminer la création de votre compte.
         </p>
       </div>
     );
