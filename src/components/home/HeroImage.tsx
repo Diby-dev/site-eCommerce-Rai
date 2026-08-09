@@ -14,7 +14,7 @@ const images = ['/1.webp', '/2.webp', '/3.webp', '/4.webp'];
 export function HeroImage() {
   const [session, setSession] = useState<Session | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
-  const autoplayPlugin = useMemo(() => Autoplay({ delay: 10000, stopOnInteraction: false }), []);
+  const autoplayPlugin = useMemo(() => Autoplay({ delay: 3000, stopOnInteraction: false }), []);
   const [emblaRef] = useEmblaCarousel({ loop: true }, [autoplayPlugin]);
 
   useEffect(() => {
