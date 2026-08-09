@@ -1,0 +1,56 @@
+name: Verification du code
+
+on:
+  push:
+    branches: [ main, developpement ]
+  pull_request:
+    branches: [ main, developpement ]
+
+# Evite d'exécuter plusieurs runs simultanés pour la même branche/ref
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Réduire les permissions par défaut pour plus de sécurité
+permissions:
+  contents: read
+  checks: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # utile si certains outils ont besoin de l'historique complet
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'                      # 20.x plutôt que 20, meilleure compatibilité
+          cache: 'npm'
+          cache-dependency-path: package-lock.json  # cache correctement selon le lockfile
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Run Linter (ESLint)
+        run: npm run lint
+
+      # Build : étape cruciale pour Next.js avant Vercel
+      - name: Build
+        run: npm run build --if-present
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: "https://placeholder-project.supabase.co"
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: "placeholder-key-for-building-purposes"
+
+      # NE PAS OUBLIER CETTE ÉTAPE : C'est elle qui lance Vitest sur GitHub !
+      - name: Run tests
+        run: npm test
