@@ -8,6 +8,7 @@ import { Footer } from '@/components/layout/Footer';
 import { CommentSection } from '@/components/home/CommentSection';
 
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { Lock, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { Tshirt } from '@/types/database';
@@ -279,4 +280,19 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
       <Footer />
     </div>
   );
+}
+
+export async function generateMetadata({ searchParams }: ShopPageProps): Promise<Metadata> {
+  const params = await searchParams;
+  const isFilteredPage = Object.values(params ?? {}).some(Boolean);
+
+  return {
+    title: "T-shirts tendance et de qualité",
+    description:
+      "Parcourez la collection E-Shirt-R et trouvez un t-shirt tendance selon vos goûts, votre couleur et votre taille.",
+    alternates: { canonical: "/" },
+    // Les résultats de recherche et filtres restent accessibles, mais ne créent
+    // pas de pages dupliquées dans l'index Google.
+    robots: isFilteredPage ? { index: false, follow: true } : undefined,
+  };
 }

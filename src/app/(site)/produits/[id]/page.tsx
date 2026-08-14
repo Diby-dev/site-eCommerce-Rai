@@ -6,6 +6,9 @@ import { RecordHistory } from '@/components/user/RecordHistory';
 import { AddToFavoriteButton } from '@/components/user/AddToFavoriteButton'; // <--- Import du composant favoris
 import { AddToCartButton } from '@/components/user/AddToCartButton';
 import { BuyModalButton } from '@/components/user/BuyModalButton';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { getSiteUrl } from '@/lib/site';
 
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['800'] });
 
@@ -14,19 +17,86 @@ const formatCfaPrice = (value: number) =>
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 
-export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-
+async function getTshirt(id: string) {
   const { data: tshirt, error } = await supabase
     .from('tshirt')
     .select('*')
     .eq('id_tshirt', id)
     .single<Tshirt>();
 
-  if (error || !tshirt) return <div className="text-black pt-20 text-center">T-shirt introuvable.</div>;
+  return { tshirt, error };
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const { tshirt } = await getTshirt(id);
+
+  if (!tshirt) {
+    return { title: 'Produit introuvable', robots: { index: false, follow: false } };
+  }
+
+  const description = tshirt.detail_tshirt || `T-shirt ${tshirt.nom_tshirt}, disponible chez E-Shirt-R.`;
+  const productUrl = `/produits/${tshirt.id_tshirt}`;
+
+  return {
+    title: tshirt.nom_tshirt,
+    description,
+    alternates: { canonical: productUrl },
+    openGraph: {
+      type: 'website',
+      url: productUrl,
+      title: tshirt.nom_tshirt,
+      description,
+      images: tshirt.image_url ? [{ url: tshirt.image_url, alt: `T-shirt ${tshirt.nom_tshirt}` }] : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: tshirt.nom_tshirt,
+      description,
+      images: tshirt.image_url ? [tshirt.image_url] : undefined,
+    },
+  };
+}
+
+export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const { tshirt, error } = await getTshirt(id);
+
+  if (error || !tshirt) notFound();
+
+  const siteUrl = getSiteUrl();
+  const productUrl = siteUrl
+    ? new URL(`/produits/${tshirt.id_tshirt}`, siteUrl).toString()
+    : `/produits/${tshirt.id_tshirt}`;
+  const productDescription = tshirt.detail_tshirt || `T-shirt ${tshirt.nom_tshirt}, disponible chez E-Shirt-R.`;
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: tshirt.nom_tshirt,
+    description: productDescription,
+    image: tshirt.image_url ? [tshirt.image_url] : undefined,
+    url: productUrl,
+    color: tshirt.couleur_tshirt,
+    size: tshirt.taille_tshirt || undefined,
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'XOF',
+      price: tshirt.prix_tshirt,
+      availability: tshirt.nombre_tshirt > 0
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/OutOfStock',
+      url: productUrl,
+    },
+  };
 
   return (
     <main className="min-h-screen bg-white text-gray-900 pt-32 px-6 lg:px-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productSchema).replace(/</g, '\\u003c'),
+        }}
+      />
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
         <RecordHistory tshirtId={tshirt.id_tshirt} />
         
