@@ -11,8 +11,8 @@ export function BuyModalButton({ tshirtName }: BuyModalButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   // Numéro de téléphone cible (avec indicatif pays pour WhatsApp, ex: Côte d'Ivoire +225)
-  const phoneNumber = '+2250575074820';
-  const whatsappNumber = '2250575074820'; // Format international sans le + pour l'API WhatsApp
+  const phoneNumber = '+2250700005323';
+  const whatsappNumber = '2250700005323'; // Format international sans le + pour l'API WhatsApp
   const message = `Bonjour, je souhaite acheter le t-shirt ${tshirtName}.`;
 
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
